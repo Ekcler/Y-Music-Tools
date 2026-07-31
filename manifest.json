@@ -1,0 +1,92 @@
+{
+    "name": "__MSG_ext_name__",
+    "short_name": "__MSG_ext_short_name__",
+    "description": "__MSG_ext_description__",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "author": "Ekcler",
+    "default_locale": "ru",
+    "host_permissions": [
+        "https://api.music.yandex.ru/*",
+        "https://api.music.yandex.net/*",
+        "https://api.music.yandex.kz/*",
+        "https://api.music.yandex.by/*",
+        "https://api.music.yandex.com/*",
+        "https://api.music.yandex.uz/*",
+        "https://api.music.yandex.ua/*"
+    ],
+    "permissions": [
+        "storage",
+        "tabs"
+    ],
+    "content_scripts": [
+        {
+            "run_at": "document_start",
+            "matches": [
+                "https://music.yandex.ru/*",
+                "https://music.yandex.by/*",
+                "https://music.yandex.kz/*",
+                "https://music.yandex.com/*",
+                "https://music.yandex.uz/*",
+                "https://music.yandex.ua/*"
+            ],
+            "js": [
+                "/script/domain/fetch-interceptor.js"
+            ],
+            "world": "MAIN"
+        },
+        {
+            "run_at": "document_end",
+            "matches": [
+                "https://music.yandex.ru/*",
+                "https://music.yandex.by/*",
+                "https://music.yandex.kz/*",
+                "https://music.yandex.com/*",
+                "https://music.yandex.uz/*",
+                "https://music.yandex.ua/*"
+            ],
+            "js": [
+                "/script/lib/browser-polyfill.min.js",
+                "/script/lib/localization.js",
+                "/script/lib/sweetalert2.min.js",
+                "/script/lib/alert.js",
+                "/script/lib/request.js",
+                "/script/lib/api/common.js",
+                "/script/lib/elementCreator.js",
+                "/script/lib/elementHandler.js",
+                "/script/lib/elementInsertion.js",
+                "/script/tool/playlist/exporter.js",
+                "/script/tool/playlist/addToPlaylist.js",
+                "/script/tool/playlist/importer.js",
+                "/script/tool/playlist/jump-to-track.js",
+                "/script/tool/playlist/menu.js",
+                "/script/domain/modcreator.js",
+                "/script/domain/content.js"
+            ]
+        }
+    ],
+    "action": {},
+    "background": {
+        "scripts": ["/script/background/background-fx.js"]
+    },
+    "icons": {
+        "16": "/icon/icon16.png",
+        "24": "/icon/icon24.png",
+        "32": "/icon/icon32.png",
+        "48": "/icon/icon48.png",
+        "64": "/icon/icon64.png",
+        "128": "/icon/icon128.png",
+        "256": "/icon/icon256.png",
+        "512": "/icon/icon512.png"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "y-music-tools@ekcler.github.io",
+            "strict_min_version": "142.0",
+            "data_collection_permissions": {
+                "required": ["none"],
+                "optional": []
+            }
+        }
+    }
+}
