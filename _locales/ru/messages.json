@@ -1,0 +1,6 @@
+{
+    "ext_name": { "message": "Y-Music-Tools" },
+    "ext_short_name": { "message": "Y-Music-Tools" },
+    "ext_description": { "message": "Добавляет новые возможности на сайт Яндекс Музыки" },
+    "info_no_tracks": { "message": "Треков не найдено" }
+}
