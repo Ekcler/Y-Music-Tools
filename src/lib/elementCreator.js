@@ -16,13 +16,19 @@ function setMenuItemToggle(titleId, state) {
     var el = document.querySelector('[data-title-id="' + titleId + '"]');
     if (!el) return;
     var toggle = el.querySelector('[role="switch"]');
-    if (!toggle) return;
-    toggle.setAttribute('aria-checked', state ? 'true' : 'false');
-    toggle.style.background = state ? '#ffff00' : 'rgba(255,255,255,0.15)';
-    var knob = toggle.querySelector('div');
-    if (knob) {
-        knob.style.transform = state ? 'translateX(16px)' : '';
-        knob.style.background = state ? '#000' : '#fff';
+    if (toggle) {
+        toggle.setAttribute('aria-checked', state ? 'true' : 'false');
+        toggle.style.background = state ? '#ffff00' : 'rgba(255,255,255,0.15)';
+        var knob = toggle.querySelector('div');
+        if (knob) {
+            knob.style.transform = state ? 'translateX(16px)' : '';
+            knob.style.background = state ? '#000' : '#fff';
+        }
+        return;
+    }
+    var check = el.querySelector('.ymt-check');
+    if (check) {
+        check.textContent = state ? '\u2713' : '';
     }
 }
 
@@ -137,7 +143,19 @@ function createMenu(data) {
                 let subItem = item.children[j];
                 let subLi = document.createElement('li');
                 if (subItem.hasOwnProperty('titleId')) subLi.setAttribute('data-title-id', subItem.titleId);
-                subLi.textContent = typeof subItem.title === 'function' ? subItem.title() : subItem.title;
+                if (subItem.toggle) {
+                    subLi.style.cssText = 'display:flex;justify-content:space-between;align-items:center;';
+                    let labelSpan = document.createElement('span');
+                    labelSpan.textContent = typeof subItem.title === 'function' ? subItem.title() : subItem.title;
+                    subLi.appendChild(labelSpan);
+                    let check = document.createElement('span');
+                    check.className = 'ymt-check';
+                    check.textContent = subItem.defaultState ? '\u2713' : '';
+                    check.style.cssText = 'font-size:13px;font-weight:700;color:#ffff00;flex-shrink:0;';
+                    subLi.appendChild(check);
+                } else {
+                    subLi.textContent = typeof subItem.title === 'function' ? subItem.title() : subItem.title;
+                }
                 subLi.addEventListener('click', subItem.handler);
                 subUl.append(subLi);
             }

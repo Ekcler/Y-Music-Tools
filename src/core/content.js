@@ -1,6 +1,37 @@
 var DATE_KEY = 'showTrackDates';
 var DATE_CURRENT_STATE = true;
 
+var WAVE_FILTER_KEY = 'ymtWaveFilterLiked';
+var ANTISKIP_KEY = 'ymtAntiSkip';
+
+function isWaveFilterEnabled() {
+    return localStorage.getItem(WAVE_FILTER_KEY) !== 'false';
+}
+
+function setWaveFilterEnabled(val) {
+    localStorage.setItem(WAVE_FILTER_KEY, val ? 'true' : 'false');
+}
+
+function onClickWaveFilterToggle() {
+    var next = !isWaveFilterEnabled();
+    setWaveFilterEnabled(next);
+    setMenuItemToggle('ymt-wave-filter-title', next);
+}
+
+function isAntiSkipEnabled() {
+    return localStorage.getItem(ANTISKIP_KEY) !== 'false';
+}
+
+function setAntiSkipEnabled(val) {
+    localStorage.setItem(ANTISKIP_KEY, val ? 'true' : 'false');
+}
+
+function onClickAntiSkipToggle() {
+    var next = !isAntiSkipEnabled();
+    setAntiSkipEnabled(next);
+    setMenuItemToggle('ymt-anti-skip-title', next);
+}
+
 function isDatesEnabled(callback) {
     var val = localStorage.getItem(DATE_KEY);
     callback(val !== 'false');
@@ -32,7 +63,6 @@ let _savedOrigPush = null;
 let _savedOrigReplace = null;
 
 injectSwalDarkTheme();
-injectUIFixes();
 initUrlObserver();
 fillContent('complete');
 
@@ -83,14 +113,6 @@ function injectSwalDarkTheme() {
         '.swal2-icon.swal2-info { border-color: rgba(255,255,255,0.2) !important; color: #3085d6 !important; }',
         '.swal2-icon.swal2-error { border-color: rgba(255,255,255,0.2) !important; }',
     ].join('\n');
-    document.head.appendChild(s);
-}
-
-function injectUIFixes() {
-    if (document.getElementById('ymt-ui-fixes')) return;
-    var s = document.createElement('style');
-    s.id = 'ymt-ui-fixes';
-    s.textContent = 'footer[class*="Footer_root"]{display:none!important}';
     document.head.appendChild(s);
 }
 

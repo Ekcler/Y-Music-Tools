@@ -99,6 +99,36 @@ function buildMenuPlaylist() {
                 defaultState: DATE_CURRENT_STATE,
                 handler: onClickDatesToggle,
             },
+            {
+                title: '\u0421\u043a\u0440\u044b\u0442\u044c \u043b\u0430\u0439\u043a\u0438 \u0432 \u0432\u043e\u043b\u043d\u0435',
+                titleId: 'ymt-wave-filter-title',
+                toggle: true,
+                defaultState: isWaveFilterEnabled(),
+                handler: onClickWaveFilterToggle,
+            },
+            {
+                title: '\u041d\u0435 \u043f\u043e\u0432\u0442\u043e\u0440\u044f\u0442\u044c \u043d\u0435\u0434\u0430\u0432\u043d\u0438\u0435 \u0442\u0440\u0435\u043a\u0438',
+                titleId: 'ymt-anti-skip-title',
+                toggle: true,
+                defaultState: isAntiSkipEnabled(),
+                handler: onClickAntiSkipToggle,
+            },
+            {
+                title: '\u0421\u043a\u0440\u044b\u0442\u044c',
+                children: HIDE_ITEMS.map(function (rule) {
+                    return {
+                        title: rule.title,
+                        titleId: rule.key,
+                        toggle: true,
+                        defaultState: isHideEnabled(rule.key),
+                        handler: (function (key) {
+                            return function () {
+                                onClickHideToggle(key);
+                            };
+                        })(rule.key),
+                    };
+                }),
+            },
         ],
     }];
     return MENU_PLAYLIST;
